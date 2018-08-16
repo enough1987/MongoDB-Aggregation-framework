@@ -1,5 +1,5 @@
 {
-  "name": "Aggregation framework",
+  "name": "Aggregation-framework",
   "version": "1.0.0",
   "description": "React, Node.js, Express, Socket.IO, MongoDB, Aggregation framwork and Webpack.",
   "main": "src/server/index.js",
@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
+    "mongoose": "^5.2.8",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "socket.io": "^2.1.1",
