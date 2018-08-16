@@ -1,7 +1,7 @@
 {
-  "name": "Aggregation",
+  "name": "Aggregation framework",
   "version": "1.0.0",
-  "description": "React, Node.js, Express, MongoDB, Aggregation framwork and Webpack.",
+  "description": "React, Node.js, Express, Socket.IO, MongoDB, Aggregation framwork and Webpack.",
   "main": "src/server/index.js",
   "scripts": {
     "start": "node src/server/index.js",
@@ -15,7 +15,9 @@
   "dependencies": {
     "express": "^4.16.3",
     "react": "^16.3.1",
-    "react-dom": "^16.3.1"
+    "react-dom": "^16.3.1",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
