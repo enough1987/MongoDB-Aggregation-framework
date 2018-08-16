@@ -1,11 +1,14 @@
 const express = require('express');
 const os = require('os');
+
 const app = express();
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
+//
 const mongoose = require('mongoose');
+
 const Schema = mongoose.Schema;
 
 const userScheme = new Schema({
@@ -13,28 +16,12 @@ const userScheme = new Schema({
   lastName: String,
   proffesion: String,
   age: Number,
-  posts: [{type: String}]
+  posts: [{ type: String }]
 });
 
 mongoose.connect('mongodb://test123:test123@ds123372.mlab.com:23372/aggregation');
-const User = mongoose.model('User', userScheme);
-
-const user = new User({
-  name: 'Bill',
-  lastName: 'Test',
-  proffesion: 'Test',
-  age: 41,
-  posts: [
-    'Hello', 'Yes I can'
-  ]
-});
-
-user.save((err) => {
-  mongoose.disconnect();
-
-  if(err) return console.log(err);
-  console.log('User saved', user);
-});
+const UserbContext = mongoose.model('User', userScheme);
+//
 
 server.listen(8080, () => console.log('Listening on port 8080!'));
 
@@ -42,7 +29,22 @@ app.use(express.static('dist'));
 
 app.get('/api/getUsername', (req, res) => res.json({ username: os.userInfo().username }));
 
-app.get('/api/getAggregatedData', (req, res) => res.json({ username: os.userInfo().username }));
+app.get('/api/getAggregatedData', (req, res) => {
+  UserbContext.aggregate([
+    {
+      $match: {
+        name: 'Bill'
+      }
+    },
+    {
+      $project: {
+        name: 1, lastName: 1, proffesion: 1, age: 1, posts: 1
+      }
+    }
+  ], (err, users) => {
+    res.json({ users });
+  });
+});
 
 
 io.on('connection', (socket) => {
