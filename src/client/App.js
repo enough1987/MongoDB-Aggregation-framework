@@ -11,10 +11,13 @@ export default class App extends Component {
     };
 
     const socket = io.connect('http://localhost:8080');
+    socket.on('server-msg-time', (data) => {
+          const date = new Date(data.time);
+          this.setState({ time: `${date.getHours()} - ${date.getMinutes()} - ${date.getSeconds()}` })
+      });
     socket.on('server-msg', (data) => {
-        const date = new Date(data.time);
-        this.setState({ time: `${date.getHours()} - ${date.getMinutes()} - ${date.getSeconds()}` })
-    });
+          console.log(' Socket ', data);
+      });
     socket.emit('client-msg', ' Soccket is going on client ');
 
   }

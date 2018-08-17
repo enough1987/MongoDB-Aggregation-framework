@@ -4,7 +4,6 @@ const router = express.Router();
 
 const dbContext = require('../_db/DbContext');
 
-
 router.get('/getAggregatedData', (req, res) => {
   dbContext.users.aggregate([
     {
@@ -18,6 +17,7 @@ router.get('/getAggregatedData', (req, res) => {
       }
     }
   ]).then((users) => {
+    res.io.emit('server-msg', 'aggregate route responded ');
     res.json({ users });
   }, (err) => {
     res.json({ err });

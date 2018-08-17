@@ -1,4 +1,5 @@
 const express = require('express');
+
 const app = express();
 
 const server = require('http').Server(app);
@@ -10,6 +11,12 @@ const getUsernameRoute = require('./routes/getUsername');
 
 app.use(express.static('dist'));
 
+app.use((req, res, next) => {
+  res.io = io;
+  next();
+});
+
+
 app.use('/api', aggregateRoute);
 app.use('/api', getUsernameRoute);
 
@@ -19,7 +26,7 @@ io.on('connection', (socket) => {
     console.log(' client msg', data);
   });
   setInterval(() => {
-    socket.emit('server-msg', { time: new Date() });
+    socket.emit('server-msg-time', { time: new Date() });
   }, 1000);
 });
 
