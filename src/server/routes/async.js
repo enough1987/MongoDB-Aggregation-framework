@@ -8,12 +8,13 @@ const path = require('path');
 
 
 router.get('/async/mapLimit', (req, res) => {
-  const filesNames = Array(100).fill().map(() => 'test.txt');
+  const filesNames = Array(100).fill().map(() => path.join(__dirname, '..', 'test.txt'));
+  filesNames[100] = 'Error';
 
   async.mapLimit(filesNames, 5, (filePath, callback) => {
-    fs.readFile(path.resolve(__dirname, filePath), 'utf8', (err, data) => {
+    fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
-        return callback(err);
+        return callback(null, null);
       }
       callback(null, data);
     });
@@ -24,8 +25,10 @@ router.get('/async/mapLimit', (req, res) => {
     if (err) {
       return res.json({ err });
     }
-    res.io.emit('server-msg', { msg: 'async parallel route responded ', data: results });
-    res.json({ results });
+
+    const succesfullResaults = results.filter(result => !!result);
+    res.io.emit('server-msg', { msg: 'async parallel route responded ', data: succesfullResaults });
+    res.json({ succesfullResaults });
   });
 });
 
