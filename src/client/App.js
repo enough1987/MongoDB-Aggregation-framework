@@ -26,6 +26,12 @@ export default class App extends Component {
     fetch('/api/getUsername')
       .then(res => res.json())
       .then(user => this.setState({ username: user.username }));
+    fetch('/api/async/parallel')
+          .then(res => res.json())
+          .then(data => console.log(' data parallel : ', data));
+      fetch('/api/async/mapLimit')
+          .then(res => res.json())
+          .then(data => console.log(' data parallelLimit : ', data));
   }
 
   render() {

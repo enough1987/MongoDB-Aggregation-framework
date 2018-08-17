@@ -17,11 +17,12 @@ router.get('/getAggregatedData', (req, res) => {
       }
     }
   ]).then((users) => {
-    res.io.emit('server-msg', 'aggregate route responded ');
+    res.io.emit('server-msg', { msg: 'aggregate route responded ' });
     res.json({ users });
   }, (err) => {
     res.json({ err });
   });
 });
+
 
 module.exports = router;

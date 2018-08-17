@@ -7,7 +7,7 @@ const os = require('os');
 
 
 router.get('/getUsername', (req, res) => {
-  res.io.emit('server-msg', 'getUsername route responded ');
+  res.io.emit('server-msg', { msg: 'getUsername route responded ' });
   res.json({ username: os.userInfo().username });
 });
 
