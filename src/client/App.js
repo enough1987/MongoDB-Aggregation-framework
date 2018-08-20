@@ -29,9 +29,12 @@ export default class App extends Component {
     fetch('/api/async/parallel')
           .then(res => res.json())
           .then(data => console.log(' data parallel : ', data));
-      fetch('/api/async/mapLimit')
+    fetch('/api/async/mapLimit')
           .then(res => res.json())
           .then(data => console.log(' data parallelLimit : ', data));
+    fetch('/api/getPerchesesData')
+          .then(res => res.json())
+          .then(data => console.log(' getPerchesesData : ', data));
   }
 
   render() {
