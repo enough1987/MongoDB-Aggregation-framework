@@ -35,7 +35,13 @@ router.get('/getPerchesesData', (req, res) => {
     },
     {
       $project: {
-        name: 1, purchase: { name: 1, count: 1 }
+        name: 1,
+        purchase: {
+          name: 1,
+          count: {
+            $ifNull: ['$purchase.count', 1]
+          }
+        }
       }
     }
   ]).then((percheses) => {
